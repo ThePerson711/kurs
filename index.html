@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Document</title>
+        <style>
+            :root {
+                --body-size: 1000px;
+            }
+            [data-size="500"] {
+                --body-size: 500px;
+            }
+            [data-size="1000"] {
+                --body-size: 1000px;
+            }
+            [data-size="1500"] {
+                --body-size: 1500px;
+            }
+
+            .func_list {
+                background-color: aqua;
+                width: 90%;
+                height: 60px;
+                position: fixed;
+                left: 5%;
+                display: flex;
+                align-items: center;
+                z-index: 10;
+                margin: 0;
+            }
+            .add_btn,
+            .upd_btn,
+            .less,
+            .more {
+                border: solid 4px red;
+                border-radius: 12px;
+                background-color: blanchedalmond;
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0px;
+                margin-right: 12px;
+                padding: 4px 12px;
+            }
+            .upd_btn {
+                width: 120px;
+            }
+            .btn_ {
+                width: 100px;
+                height: 50px;
+                background-color: rgb(54, 178, 32);
+                position: absolute;
+                opacity: 0.7;
+                border-radius: 8px;
+                border: solid 2px black;
+                top: 100px;
+                left: 120px;
+            }
+            .less,
+            .more {
+                display: none;
+            }
+            .btn_pos,
+            .btn_siz {
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                background-color: rgb(21, 231, 161);
+                border-radius: 10px;
+                border: solid 2px black;
+            }
+            .btn_pos {
+                left: -10px;
+                top: -10px;
+                cursor: move;
+            }
+            .btn_siz {
+                left: 100%;
+                top: 100%;
+                transform: translate(-12px, -12px);
+                cursor: se-resize;
+            }
+            .btn_cal {
+                width: 36px;
+                height: 18px;
+                background-color: rgb(246, 23, 160);
+                cursor:help;
+                position: absolute;
+                left: 50%;
+                top: -14px;
+                transform: translateX(-18px);
+                border-radius: 8px;
+                border: solid 2px black;
+            }
+            .btn_ind {
+                width: 24px;
+                height: 18px;
+                background-color: rgb(82, 23, 246);
+                cursor:help;
+                position: absolute;
+                left: 50%;
+                top: -14px;
+                transform: translateX(24px);
+                border-radius: 8px;
+                border: solid 1px black;
+                font-weight: bold;
+                font-family: 'Times New Roman', Times, serif;
+                color: rgb(191, 255, 0);
+                padding-left: 8px;
+            }
+            .btn_ p {
+                font-size: 22px;
+                padding: 0;
+                font-weight: bold;
+                margin: 10px 0 0 10px;
+            }
+            .img_ {
+                margin: 0px;
+                left: 0;
+                top: 0px;
+                /*top: 262px;*/
+                position: absolute;
+                opacity: 0.5;
+                background-color: red;
+                width: var(--body-size);
+            }
+            .images_ {
+                margin: 0px;
+                width: 100%;
+            }
+            .hidden {
+                display: none;
+                position: fixed;
+                left: -1000px;
+                top: -1000px;
+                aspect-ratio: 1/1;
+                width: 400px;
+            }
+            ._cal_div {
+                aspect-ratio: 4/1;
+                width: 100%;
+                min-width: 200px;
+                position: absolute;
+                left: 50px;
+                top: 20px;
+                display: none;
+                opacity: 0.9;
+            }
+            ._cal_text {
+                width: 100%;
+                height: 100%;
+                min-width: 200px;  
+                min-height: 50px;          
+                border-radius: 8px;
+                border: solid 2px black;
+                background-color: lightcyan;
+                font-size: 26px;
+                padding: 8px;
+            }
+            ._cal_btn {
+                width: 38px;
+                height: 24px;
+                position: absolute;
+                left: 50%;
+                top: 100%;
+                transform: translate(-12px, -8px);
+                border-radius: 8px;
+                border: solid 3px black;
+                background-color: lightcoral;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- hidden -->
+        <div id="size_of_blocks" class="hidden">61</div>
+        <div class="func_list">
+            <button class="add_btn" onclick="
+                AddBtn();
+                ">
+                Add
+            </button>
+            <button class="upd_btn" onclick="
+                UpDate();
+                ">
+                UpDate
+            </button>
+            <button class="less" onclick="ChangeSize(-1)">
+                <
+            </button>
+            <button class="more" onclick="ChangeSize(1)">
+                >
+            </button>
+        </div>
+        <div class="img_">
+            <img src="images/1.jpg" class="images_">
+            <img src="images/2.jpg" class="images_">
+            <img src="images/3.jpg" class="images_">
+            <img src="images/4.jpg" class="images_">
+            <img src="images/5.jpg" class="images_">
+            <img src="images/6.jpg" class="images_">
+            <img src="images/7.jpg" class="images_">
+            <img src="images/8.jpg" class="images_">
+            <img src="images/9.jpg" class="images_">
+            <img src="images/10.jpg" class="images_">
+            <img src="images/11.jpg" class="images_">
+            <img src="images/12.jpg" class="images_">
+            <img src="images/13.jpg" class="images_">
+            <img src="images/14.jpg" class="images_">
+        </div>
+        <div id="main">
+            <div id="screen_last_width" class="hidden">1903</div>
+                    <div id="10001" class="btn_" style="left: 323px; top: 3944px; width: 90px; height: 44px;">
+                        <p class="btn_p" id="13001">12.4</p>
+                        <div id="11001" class="btn_pos" onclick=" Move(10001);">
+                        </div>
+                        <div id="12001" class="btn_siz" onclick=" Change(10001);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13001); 
+                            CalP_on(1);">
+                        </div>
+                        <div id="13501" class="btn_ind">
+                            1
+                        </div>
+                        <div id="14001" class="_cal_div" style="display: none;">
+                            <textarea id="15001" class="_cal_text" rows="5" cols="33">12.4</textarea> 
+                            <button id="16001" class="_cal_btn" onclick=" CalP_off(1) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13331" class="hidden">    12.4                        </div>
+                    <div id="left_10001" class="hidden">685.0000000000001</div>
+                    <div id="top_10001" class="hidden">7637.000000000001</div>
+                    <div id="width_10001" class="hidden">90.00000000000001</div>
+                    <div id="height_10001" class="hidden">44.00000000000001</div>
+                 
+                    <div id="10002" class="btn_" style="left: 362px; top: 4002px; width: 91px; height: 32px;">
+                        <p class="btn_p" id="13002">5.4</p>
+                        <div id="11002" class="btn_pos" onclick=" Move(10002);">
+                        </div>
+                        <div id="12002" class="btn_siz" onclick=" Change(10002);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13002); 
+                            CalP_on(2);">
+                        </div>
+                        <div id="13502" class="btn_ind">
+                            2
+                        </div>
+                        <div id="14002" class="_cal_div" style="display: none;">
+                            <textarea id="15002" class="_cal_text" rows="5" cols="33">5.4</textarea> 
+                            <button id="16002" class="_cal_btn" onclick=" CalP_off(2) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13332" class="hidden">5.4                            </div>
+                    <div id="left_10002" class="hidden">660.0000000000001</div>
+                    <div id="top_10002" class="hidden">7689.000000000001</div>
+                    <div id="width_10002" class="hidden">91.00000000000003</div>
+                    <div id="height_10002" class="hidden">38.000000000000014</div>
+                
+                    <div id="10003" class="btn_" style="left: 407px; top: 4047px; width: 94px; height: 33px;">
+                        <p class="btn_p" id="13003">4</p>
+                        <div id="11003" class="btn_pos" onclick=" Move(10003);">
+                        </div>
+                        <div id="12003" class="btn_siz" onclick=" Change(10003);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13003); 
+                            CalP_on(3);">
+                        </div>
+                        <div id="13503" class="btn_ind">
+                            3
+                        </div>
+                        <div id="14003" class="_cal_div" style="display: none;">
+                            <textarea id="15003" class="_cal_text" rows="5" cols="33">4</textarea> 
+                            <button id="16003" class="_cal_btn" onclick=" CalP_off(3) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13333" class="hidden">       4                     </div>
+                    <div id="left_10003" class="hidden">765.0000000000002</div>
+                    <div id="top_10003" class="hidden">7730.000000000001</div>
+                    <div id="width_10003" class="hidden">88.00000000000001</div>
+                    <div id="height_10003" class="hidden">43</div>
+                 
+                    <div id="10004" class="btn_" style="left: 275px; top: 4068px; width: 69px; height: 36px;">
+                        <p class="btn_p" id="13004">0.7</p>
+                        <div id="11004" class="btn_pos" onclick=" Move(10004);">
+                        </div>
+                        <div id="12004" class="btn_siz" onclick=" Change(10004);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13004); 
+                            CalP_on(4);">
+                        </div>
+                        <div id="13504" class="btn_ind">
+                            4
+                        </div>
+                        <div id="14004" class="_cal_div" style="display: none;">
+                            <textarea id="15004" class="_cal_text" rows="5" cols="33">0.7</textarea> 
+                            <button id="16004" class="_cal_btn" onclick=" CalP_off(4) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13334" class="hidden">  .7                          </div>
+                    <div id="left_10004" class="hidden">524</div>
+                    <div id="top_10004" class="hidden">7772.000000000005</div>
+                    <div id="width_10004" class="hidden">69.00000000000001</div>
+                    <div id="height_10004" class="hidden">50.00000000000001</div>
+                 
+                    <div id="10005" class="btn_" style="left: 803px; top: 4847px; width: 73px; height: 38px;">
+                        <p class="btn_p" id="13005">0.25</p>
+                        <div id="11005" class="btn_pos" onclick=" Move(10005);">
+                        </div>
+                        <div id="12005" class="btn_siz" onclick=" Change(10005);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13005); 
+                            CalP_on(5);">
+                        </div>
+                        <div id="13505" class="btn_ind">
+                            5
+                        </div>
+                        <div id="14005" class="_cal_div" style="display: none;">
+                            <textarea id="15005" class="_cal_text" rows="5" cols="33">0.25</textarea> 
+                            <button id="16005" class="_cal_btn" onclick=" CalP_off(5) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13335" class="hidden">0.25                            </div>
+                    <div id="left_10005" class="hidden">1531.0000000000002</div>
+                    <div id="top_10005" class="hidden">9284.000000000002</div>
+                    <div id="width_10005" class="hidden">100.00000000000001</div>
+                    <div id="height_10005" class="hidden">50.00000000000001</div>
+                 
+                    <div id="10006" class="btn_" style="left: 602px; top: 4959px; width: 87px; height: 45px;">
+                        <p class="btn_p" id="13006">1.55</p>
+                        <div id="11006" class="btn_pos" onclick=" Move(10006);">
+                        </div>
+                        <div id="12006" class="btn_siz" onclick=" Change(10006);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13006); 
+                            CalP_on(6);">
+                        </div>
+                        <div id="13506" class="btn_ind">
+                            6
+                        </div>
+                        <div id="14006" class="_cal_div" style="display: none;">
+                            <textarea id="15006" class="_cal_text" rows="5" cols="33">1.55</textarea> 
+                            <button id="16006" class="_cal_btn" onclick=" CalP_off(6) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13336" class="hidden"> w[5]*w[1]/2                           </div>
+                    <div id="left_10006" class="hidden">1141.0000000000002</div>
+                    <div id="top_10006" class="hidden">9513.000000000002</div>
+                    <div id="width_10006" class="hidden">100.00000000000001</div>
+                    <div id="height_10006" class="hidden">50.00000000000001</div>
+                 
+                    <div id="10007" class="btn_" style="left: 581px; top: 5025px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="13007">6.390813719707374</p>
+                        <div id="11007" class="btn_pos" onclick=" Move(10007);">
+                        </div>
+                        <div id="12007" class="btn_siz" onclick=" Change(10007);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13007); 
+                            CalP_on(7);">
+                        </div>
+                        <div id="13507" class="btn_ind">
+                            7
+                        </div>
+                        <div id="14007" class="_cal_div" style="display: none;">
+                            <textarea id="15007" class="_cal_text" rows="5" cols="33" style="height: 115px; width: 543px;">6.390813719707374</textarea> 
+                            <button id="16007" class="_cal_btn" onclick=" CalP_off(7) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13337" class="hidden">   ildiz(kvadrat(w[6])+kvadrat(w[1])/4)                         </div>
+                    <div id="left_10007" class="hidden">1107.0000000000002</div>
+                    <div id="top_10007" class="hidden">9626</div>
+                    <div id="width_10007" class="hidden">100.00000000000001</div>
+                    <div id="height_10007" class="hidden">50.00000000000001</div>
+                 
+                    <div id="10008" class="btn_" style="left: 135px; top: 4877px; width: 62px; height: 50px;">
+                        <p class="btn_p" id="13008">14</p>
+                        <div id="11008" class="btn_pos" onclick=" Move(10008);">
+                        </div>
+                        <div id="12008" class="btn_siz" onclick=" Change(10008);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13008); 
+                            CalP_on(8);">
+                        </div>
+                        <div id="13508" class="btn_ind">
+                            8
+                        </div>
+                        <div id="14008" class="_cal_div" style="display: none;">
+                            <textarea id="15008" class="_cal_text" rows="5" cols="33">14</textarea> 
+                            <button id="16008" class="_cal_btn" onclick=" CalP_off(8) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13338" class="hidden">    14                        </div>
+                    <div id="left_10008" class="hidden">274.0000000000001</div>
+                    <div id="top_10008" class="hidden">9352.000000000002</div>
+                    <div id="width_10008" class="hidden">62.000000000000014</div>
+                    <div id="height_10008" class="hidden">50.00000000000001</div>
+                 
+                    <div id="10009" class="btn_" style="left: 666px; top: 5121px; width: 78px; height: 41px;">
+                        <p class="btn_p" id="13009">52</p>
+                        <div id="11009" class="btn_pos" onclick=" Move(10009);">
+                        </div>
+                        <div id="12009" class="btn_siz" onclick=" Change(10009);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(13009); 
+                            CalP_on(9);">
+                        </div>
+                        <div id="13509" class="btn_ind">
+                            9
+                        </div>
+                        <div id="14009" class="_cal_div" style="display: none;">
+                            <textarea id="15009" class="_cal_text" rows="5" cols="33">52</textarea> 
+                            <button id="16009" class="_cal_btn" onclick=" CalP_off(9) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="13339" class="hidden">   (90+w[8])/2                         </div>
+                    <div id="left_10009" class="hidden">1277</div>
+                    <div id="top_10009" class="hidden">9812</div>
+                    <div id="width_10009" class="hidden">85.00000000000001</div>
+                    <div id="height_10009" class="hidden">61.000000000000014</div>
+                 
+                    <div id="100010" class="btn_" style="left: 411.981px; top: 4973.42px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130010">38</p>
+                        <div id="110010" class="btn_pos" onclick=" Move(100010);">
+                        </div>
+                        <div id="120010" class="btn_siz" onclick=" Change(100010);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130010); 
+                            CalP_on(10);">
+                        </div>
+                        <div id="135010" class="btn_ind">
+                            10
+                        </div>
+                        <div id="140010" class="_cal_div" style="display: none;">
+                            <textarea id="150010" class="_cal_text" rows="5" cols="33">38</textarea> 
+                            <button id="160010" class="_cal_btn" onclick=" CalP_off(10) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133310" class="hidden">     90-w[9]                       </div>
+                    <div id="left_100010" class="hidden">784.0000000000001</div>
+                    <div id="top_100010" class="hidden">9963.000000000002</div>
+                    <div id="width_100010" class="hidden">100.00000000000001</div>
+                    <div id="height_100010" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100011" class="btn_" style="left: 636px; top: 5288px; width: 72px; height: 26px;">
+                        <p class="btn_p" id="130011">76</p>
+                        <div id="110011" class="btn_pos" onclick=" Move(100011);">
+                        </div>
+                        <div id="120011" class="btn_siz" onclick=" Change(100011);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130011); 
+                            CalP_on(11);">
+                        </div>
+                        <div id="135011" class="btn_ind">
+                            11
+                        </div>
+                        <div id="140011" class="_cal_div" style="display: none;">
+                            <textarea id="150011" class="_cal_text" rows="5" cols="33">76</textarea> 
+                            <button id="160011" class="_cal_btn" onclick=" CalP_off(11) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133311" class="hidden">  90-w[8]                          </div>
+                    <div id="left_100011" class="hidden">1219</div>
+                    <div id="top_100011" class="hidden">10109.000000000002</div>
+                    <div id="width_100011" class="hidden">78.00000000000001</div>
+                    <div id="height_100011" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100012" class="btn_" style="left: 645px; top: 5354px; width: 103px; height: 38px;">
+                        <p class="btn_p" id="130012">2.45</p>
+                        <div id="110012" class="btn_pos" onclick=" Move(100012);">
+                        </div>
+                        <div id="120012" class="btn_siz" onclick=" Change(100012);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130012); 
+                            CalP_on(12);">
+                        </div>
+                        <div id="135012" class="btn_ind">
+                            12
+                        </div>
+                        <div id="140012" class="_cal_div" style="display: none;">
+                            <textarea id="150012" class="_cal_text" rows="5" cols="33">2.45</textarea> 
+                            <button id="160012" class="_cal_btn" onclick=" CalP_off(12) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133312" class="hidden">     w[3]-w[6]                       </div>
+                    <div id="left_100012" class="hidden">1208.0000000000005</div>
+                    <div id="top_100012" class="hidden">10246</div>
+                    <div id="width_100012" class="hidden">100.00000000000001</div>
+                    <div id="height_100012" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100013" class="btn_" style="left: 650px; top: 5430px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130013">8.840813719707374</p>
+                        <div id="110013" class="btn_pos" onclick=" Move(100013);">
+                        </div>
+                        <div id="120013" class="btn_siz" onclick=" Change(100013);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130013); 
+                            CalP_on(13);">
+                        </div>
+                        <div id="135013" class="btn_ind">
+                            13
+                        </div>
+                        <div id="140013" class="_cal_div" style="display: none;">
+                            <textarea id="150013" class="_cal_text" rows="5" cols="33">8.840813719707374</textarea> 
+                            <button id="160013" class="_cal_btn" onclick=" CalP_off(13) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133313" class="hidden">w[7]+w[12]                            </div>
+                    <div id="left_100013" class="hidden">1235</div>
+                    <div id="top_100013" class="hidden">10373.000000000002</div>
+                    <div id="width_100013" class="hidden">100.00000000000001</div>
+                    <div id="height_100013" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100014" class="btn_" style="left: 699px; top: 6801px; width: 119px; height: 38px;">
+                        <p class="btn_p" id="130014">1.081</p>
+                        <div id="110014" class="btn_pos" onclick=" Move(100014);">
+                        </div>
+                        <div id="120014" class="btn_siz" onclick=" Change(100014);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130014); 
+                            CalP_on(14);">
+                        </div>
+                        <div id="135014" class="btn_ind">
+                            14
+                        </div>
+                        <div id="140014" class="_cal_div" style="display: none;">
+                            <textarea id="150014" class="_cal_text" rows="5" cols="33">1.081</textarea> 
+                            <button id="160014" class="_cal_btn" onclick=" CalP_off(14) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133314" class="hidden">1.081                            </div>
+                    <div id="left_100014" class="hidden">1338.0000000000002</div>
+                    <div id="top_100014" class="hidden">12996</div>
+                    <div id="width_100014" class="hidden">100.00000000000001</div>
+                    <div id="height_100014" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100015" class="btn_" style="left: 719px; top: 6870px; width: 120px; height: 42px;">
+                        <p class="btn_p" id="130015">1.3445</p>
+                        <div id="110015" class="btn_pos" onclick=" Move(100015);">
+                        </div>
+                        <div id="120015" class="btn_siz" onclick=" Change(100015);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130015); 
+                            CalP_on(15);">
+                        </div>
+                        <div id="135015" class="btn_ind">
+                            15
+                        </div>
+                        <div id="140015" class="_cal_div" style="display: none;">
+                            <textarea id="150015" class="_cal_text" rows="5" cols="33">1.3445</textarea> 
+                            <button id="160015" class="_cal_btn" onclick=" CalP_off(15) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133315" class="hidden">  1.3445                          </div>
+                    <div id="left_100015" class="hidden">1370.0000000000002</div>
+                    <div id="top_100015" class="hidden">13128.000000000002</div>
+                    <div id="width_100015" class="hidden">100.00000000000001</div>
+                    <div id="height_100015" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100016" class="btn_" style="left: 555px; top: 7622px; width: 64px; height: 41px;">
+                        <p class="btn_p" id="130016">1.5442857142857143</p>
+                        <div id="110016" class="btn_pos" onclick=" Move(100016);">
+                        </div>
+                        <div id="120016" class="btn_siz" onclick=" Change(100016);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130016); 
+                            CalP_on(16);">
+                        </div>
+                        <div id="135016" class="btn_ind">
+                            16
+                        </div>
+                        <div id="140016" class="_cal_div" style="display: none;">
+                            <textarea id="150016" class="_cal_text" rows="5" cols="33">1.5442857142857143</textarea> 
+                            <button id="160016" class="_cal_btn" onclick=" CalP_off(16) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133316" class="hidden">  w[14]/w[4]                          </div>
+                    <div id="left_100016" class="hidden">384.0000000000001</div>
+                    <div id="top_100016" class="hidden">14326.000000000002</div>
+                    <div id="width_100016" class="hidden">85.00000000000001</div>
+                    <div id="height_100016" class="hidden">91.00000000000003</div>
+                 
+                    <div id="100017" class="btn_" style="left: 831px; top: 7515px; width: 58px; height: 43px;">
+                        <p class="btn_p" id="130017">1.4</p>
+                        <div id="110017" class="btn_pos" onclick=" Move(100017);">
+                        </div>
+                        <div id="120017" class="btn_siz" onclick=" Change(100017);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130017); 
+                            CalP_on(17);">
+                        </div>
+                        <div id="135017" class="btn_ind">
+                            17
+                        </div>
+                        <div id="140017" class="_cal_div" style="display: none;">
+                            <textarea id="150017" class="_cal_text" rows="5" cols="33">1.4</textarea> 
+                            <button id="160017" class="_cal_btn" onclick=" CalP_off(17) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133317" class="hidden">  1.4                          </div>
+                    <div id="left_100017" class="hidden">1058.0000000000002</div>
+                    <div id="top_100017" class="hidden">14498.000000000004</div>
+                    <div id="width_100017" class="hidden">80</div>
+                    <div id="height_100017" class="hidden">76.00000000000003</div>
+                 
+                    <div id="100018" class="btn_" style="left: 593px; top: 7727px; width: 91px; height: 37px;">
+                        <p class="btn_p" id="130018">0.7</p>
+                        <div id="110018" class="btn_pos" onclick=" Move(100018);">
+                        </div>
+                        <div id="120018" class="btn_siz" onclick=" Change(100018);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130018); 
+                            CalP_on(18);">
+                        </div>
+                        <div id="135018" class="btn_ind">
+                            18
+                        </div>
+                        <div id="140018" class="_cal_div" style="display: none;">
+                            <textarea id="150018" class="_cal_text" rows="5" cols="33">0.7</textarea> 
+                            <button id="160018" class="_cal_btn" onclick=" CalP_off(18) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133318" class="hidden">  w[4]                          </div>
+                    <div id="left_100018" class="hidden">1132.0000000000002</div>
+                    <div id="top_100018" class="hidden">14762.000000000002</div>
+                    <div id="width_100018" class="hidden">100.00000000000001</div>
+                    <div id="height_100018" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100019" class="btn_" style="left: 609px; top: 7779px; width: 107px; height: 38px;">
+                        <p class="btn_p" id="130019">0.9799999999999999</p>
+                        <div id="110019" class="btn_pos" onclick=" Move(100019);">
+                        </div>
+                        <div id="120019" class="btn_siz" onclick=" Change(100019);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130019); 
+                            CalP_on(19);">
+                        </div>
+                        <div id="135019" class="btn_ind">
+                            19
+                        </div>
+                        <div id="140019" class="_cal_div" style="display: none;">
+                            <textarea id="150019" class="_cal_text" rows="5" cols="33">0.9799999999999999</textarea> 
+                            <button id="160019" class="_cal_btn" onclick=" CalP_off(19) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133319" class="hidden">   w[17]*w[4]                         </div>
+                    <div id="left_100019" class="hidden">1177</div>
+                    <div id="top_100019" class="hidden">14844.000000000005</div>
+                    <div id="width_100019" class="hidden">100.00000000000001</div>
+                    <div id="height_100019" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100020" class="btn_" style="left: 687px; top: 7883px; width: 193px; height: 58px;">
+                        <p class="btn_p" id="130020">0.2369985983355234</p>
+                        <div id="110020" class="btn_pos" onclick=" Move(100020);">
+                        </div>
+                        <div id="120020" class="btn_siz" onclick=" Change(100020);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130020); 
+                            CalP_on(20);">
+                        </div>
+                        <div id="135020" class="btn_ind">
+                            20
+                        </div>
+                        <div id="140020" class="_cal_div" style="display: none;">
+                            <textarea id="150020" class="_cal_text" rows="5" cols="33" style="height: 222px; width: 333px;">NaN</textarea> 
+                            <button id="160020" class="_cal_btn" onclick=" CalP_off(20) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133320" class="hidden">  ((w[14]+w[4])*w[17])/(1000/(w[21]*w[1])-1)                          </div>
+                    <div id="left_100020" class="hidden">1407.0000000000002</div>
+                    <div id="top_100020" class="hidden">15037.000000000002</div>
+                    <div id="width_100020" class="hidden">193.00000000000006</div>
+                    <div id="height_100020" class="hidden">58.000000000000014</div>
+                 
+                    <div id="100021" class="btn_" style="left: 668px; top: 7956px; width: 84px; height: 34px;">
+                        <p class="btn_p" id="130021">7</p>
+                        <div id="110021" class="btn_pos" onclick=" Move(100021);">
+                        </div>
+                        <div id="120021" class="btn_siz" onclick=" Change(100021);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130021); 
+                            CalP_on(21);">
+                        </div>
+                        <div id="135021" class="btn_ind">
+                            21
+                        </div>
+                        <div id="140021" class="_cal_div" style="display: none;">
+                            <textarea id="150021" class="_cal_text" rows="5" cols="33">7</textarea> 
+                            <button id="160021" class="_cal_btn" onclick=" CalP_off(21) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133321" class="hidden">  7                          </div>
+                    <div id="left_100021" class="hidden">1345.0000000000002</div>
+                    <div id="top_100021" class="hidden">15074.000000000004</div>
+                    <div id="width_100021" class="hidden">100.00000000000001</div>
+                    <div id="height_100021" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100022" class="btn_" style="left: 684px; top: 8028px; width: 219px; height: 45px;">
+                        <p class="btn_p" id="130022">8.540092431011827</p>
+                        <div id="110022" class="btn_pos" onclick=" Move(100022);">
+                        </div>
+                        <div id="120022" class="btn_siz" onclick=" Change(100022);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130022); 
+                            CalP_on(22);">
+                        </div>
+                        <div id="135022" class="btn_ind">
+                            22
+                        </div>
+                        <div id="140022" class="_cal_div" style="display: none;">
+                            <textarea id="150022" class="_cal_text" rows="5" cols="33">NaN</textarea> 
+                            <button id="160022" class="_cal_btn" onclick=" CalP_off(22) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133322" class="hidden">     (w[15]+w[20])*w[2]                       </div>
+                    <div id="left_100022" class="hidden">1288.0000000000002</div>
+                    <div id="top_100022" class="hidden">15353.000000000002</div>
+                    <div id="width_100022" class="hidden">220.00000000000009</div>
+                    <div id="height_100022" class="hidden">78.00000000000001</div>
+                 
+                    <div id="100023" class="btn_" style="left: 584px; top: 8118px; width: 113px; height: 41px;">
+                        <p class="btn_p" id="130023">5.292</p>
+                        <div id="110023" class="btn_pos" onclick=" Move(100023);">
+                        </div>
+                        <div id="120023" class="btn_siz" onclick=" Change(100023);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130023); 
+                            CalP_on(23);">
+                        </div>
+                        <div id="135023" class="btn_ind">
+                            23
+                        </div>
+                        <div id="140023" class="_cal_div" style="display: none;">
+                            <textarea id="150023" class="_cal_text" rows="5" cols="33">5.292</textarea> 
+                            <button id="160023" class="_cal_btn" onclick=" CalP_off(23) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133323" class="hidden">     w[19]*w[2]                      </div>
+                    <div id="left_100023" class="hidden">1143</div>
+                    <div id="top_100023" class="hidden">15505.000000000004</div>
+                    <div id="width_100023" class="hidden">100.00000000000001</div>
+                    <div id="height_100023" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100024" class="btn_" style="left: 603px; top: 8193px; width: 121px; height: 41px;">
+                        <p class="btn_p" id="130024">13.832092431011827</p>
+                        <div id="110024" class="btn_pos" onclick=" Move(100024);">
+                        </div>
+                        <div id="120024" class="btn_siz" onclick=" Change(100024);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130024); 
+                            CalP_on(24);">
+                        </div>
+                        <div id="135024" class="btn_ind">
+                            24
+                        </div>
+                        <div id="140024" class="_cal_div" style="display: none;">
+                            <textarea id="150024" class="_cal_text" rows="5" cols="33">NaN</textarea> 
+                            <button id="160024" class="_cal_btn" onclick=" CalP_off(24) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133324" class="hidden"> w[22]+w[23]                           </div>
+                    <div id="left_100024" class="hidden">1179.0000000000005</div>
+                    <div id="top_100024" class="hidden">15646.000000000002</div>
+                    <div id="width_100024" class="hidden">100.00000000000001</div>
+                    <div id="height_100024" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100025" class="btn_" style="left: 552px; top: 8657px; width: 103px; height: 37px;">
+                        <p class="btn_p" id="130025">2.45</p>
+                        <div id="110025" class="btn_pos" onclick=" Move(100025);">
+                        </div>
+                        <div id="120025" class="btn_siz" onclick=" Change(100025);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130025); 
+                            CalP_on(25);">
+                        </div>
+                        <div id="135025" class="btn_ind">
+                            25
+                        </div>
+                        <div id="140025" class="_cal_div" style="display: none;">
+                            <textarea id="150025" class="_cal_text" rows="5" cols="33">2.45</textarea> 
+                            <button id="160025" class="_cal_btn" onclick=" CalP_off(25) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133325" class="hidden">w[12]                            </div>
+                    <div id="left_100025" class="hidden">1063.0000000000005</div>
+                    <div id="top_100025" class="hidden">16511</div>
+                    <div id="width_100025" class="hidden">100.00000000000001</div>
+                    <div id="height_100025" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100026" class="btn_" style="left: 479px; top: 8724px; width: 112px; height: 41px;">
+                        <p class="btn_p" id="130026">85.75897307227332</p>
+                        <div id="110026" class="btn_pos" onclick=" Move(100026);">
+                        </div>
+                        <div id="120026" class="btn_siz" onclick=" Change(100026);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130026); 
+                            CalP_on(26);">
+                        </div>
+                        <div id="135026" class="btn_ind">
+                            26
+                        </div>
+                        <div id="140026" class="_cal_div" style="display: none;">
+                            <textarea id="150026" class="_cal_text" rows="5" cols="33">NaN</textarea> 
+                            <button id="160026" class="_cal_btn" onclick=" CalP_off(26) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133326" class="hidden">  w[24]*w[1]/2                          </div>
+                    <div id="left_100026" class="hidden">916.0000000000001</div>
+                    <div id="top_100026" class="hidden">16648.000000000004</div>
+                    <div id="width_100026" class="hidden">100.00000000000001</div>
+                    <div id="height_100026" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100027" class="btn_" style="left: 536px; top: 8781px; width: 127px; height: 32px;">
+                        <p class="btn_p" id="130027">66.46320413101184</p>
+                        <div id="110027" class="btn_pos" onclick=" Move(100027);">
+                        </div>
+                        <div id="120027" class="btn_siz" onclick=" Change(100027);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130027); 
+                            CalP_on(27);">
+                        </div>
+                        <div id="135027" class="btn_ind">
+                            27
+                        </div>
+                        <div id="140027" class="_cal_div" style="display: none;">
+                            <textarea id="150027" class="_cal_text" rows="5" cols="33">NaN</textarea> 
+                            <button id="160027" class="_cal_btn" onclick=" CalP_off(27) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133327" class="hidden">   w[24]*kvadrat(w[1])/(8*w[3])                         </div>
+                    <div id="left_100027" class="hidden">1056</div>
+                    <div id="top_100027" class="hidden">16730.000000000004</div>
+                    <div id="width_100027" class="hidden">100.00000000000001</div>
+                    <div id="height_100027" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100028" class="btn_" style="left: 353px; top: 8901px; width: 210px; height: 37px;">
+                        <p class="btn_p" id="130028">16283.4850120979</p>
+                        <div id="110028" class="btn_pos" onclick=" Move(100028);">
+                        </div>
+                        <div id="120028" class="btn_siz" onclick=" Change(100028);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130028); 
+                            CalP_on(28);">
+                        </div>
+                        <div id="135028" class="btn_ind">
+                            28
+                        </div>
+                        <div id="140028" class="_cal_div" style="display: none;">
+                            <textarea id="150028" class="_cal_text" rows="5" cols="33">NaN</textarea> 
+                            <button id="160028" class="_cal_btn" onclick=" CalP_off(28) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133328" class="hidden">      w[27]*w[25]*100                      </div>
+                    <div id="left_100028" class="hidden">917.0000000000003</div>
+                    <div id="top_100028" class="hidden">16970.000000000004</div>
+                    <div id="width_100028" class="hidden">204.00000000000003</div>
+                    <div id="height_100028" class="hidden">70.00000000000001</div>
+                 
+                    <div id="100029" class="btn_" style="left: 719px; top: 8943px; width: 215px; height: 41px;">
+                        <p class="btn_p" id="130029">108.51940452565466</p>
+                        <div id="110029" class="btn_pos" onclick=" Move(100029);">
+                        </div>
+                        <div id="120029" class="btn_siz" onclick=" Change(100029);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130029); 
+                            CalP_on(29);">
+                        </div>
+                        <div id="135029" class="btn_ind">
+                            29
+                        </div>
+                        <div id="140029" class="_cal_div" style="display: none;">
+                            <textarea id="150029" class="_cal_text" rows="5" cols="33" style="height: 147px; width: 250px;">NaN</textarea> 
+                            <button id="160029" class="_cal_btn" onclick=" CalP_off(29) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133329" class="hidden">   w[26]*0.788+w[27]*0.616                       </div>
+                    <div id="left_100029" class="hidden">696.0000000000002</div>
+                    <div id="top_100029" class="hidden">16969</div>
+                    <div id="width_100029" class="hidden">191</div>
+                    <div id="height_100029" class="hidden">74.00000000000003</div>
+                 
+                    <div id="100030" class="btn_" style="left: 386px; top: 9401px; width: 84px; height: 35px;">
+                        <p class="btn_p" id="130030">1.1</p>
+                        <div id="110030" class="btn_pos" onclick=" Move(100030);">
+                        </div>
+                        <div id="120030" class="btn_siz" onclick=" Change(100030);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130030); 
+                            CalP_on(30);">
+                        </div>
+                        <div id="135030" class="btn_ind">
+                            30
+                        </div>
+                        <div id="140030" class="_cal_div" style="display: none;">
+                            <textarea id="150030" class="_cal_text" rows="5" cols="33">1.1</textarea> 
+                            <button id="160030" class="_cal_btn" onclick=" CalP_off(30) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133330" class="hidden">   1.1                         </div>
+                    <div id="left_100030" class="hidden">649.0000000000001</div>
+                    <div id="top_100030" class="hidden">17630.000000000007</div>
+                    <div id="width_100030" class="hidden">101.00000000000001</div>
+                    <div id="height_100030" class="hidden">68.00000000000001</div>
+                 
+                    <div id="100031" class="btn_" style="left: 431px; top: 9509px; width: 62px; height: 38px;">
+                        <p class="btn_p" id="130031">0.96</p>
+                        <div id="110031" class="btn_pos" onclick=" Move(100031);">
+                        </div>
+                        <div id="120031" class="btn_siz" onclick=" Change(100031);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130031); 
+                            CalP_on(31);">
+                        </div>
+                        <div id="135031" class="btn_ind">
+                            31
+                        </div>
+                        <div id="140031" class="_cal_div" style="display: none;">
+                            <textarea id="150031" class="_cal_text" rows="5" cols="33">1</textarea> 
+                            <button id="160031" class="_cal_btn" onclick=" CalP_off(31) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133331" class="hidden">  0.96                          </div>
+                    <div id="left_100031" class="hidden">1449.0000000000002</div>
+                    <div id="top_100031" class="hidden">17710</div>
+                    <div id="width_100031" class="hidden">100.00000000000001</div>
+                    <div id="height_100031" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100032" class="btn_" style="left: 698px; top: 9089px; width: 226px; height: 38px;">
+                        <p class="btn_p" id="130032">0.5038232105687458</p>
+                        <div id="110032" class="btn_pos" onclick=" Move(100032);">
+                        </div>
+                        <div id="120032" class="btn_siz" onclick=" Change(100032);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130032); 
+                            CalP_on(32);">
+                        </div>
+                        <div id="135032" class="btn_ind">
+                            32
+                        </div>
+                        <div id="140032" class="_cal_div" style="display: none;">
+                            <textarea id="150032" class="_cal_text" rows="5" cols="33" style="width: 352px; height: 269px;">0.5248158443424437</textarea> 
+                            <button id="160032" class="_cal_btn" onclick=" CalP_off(32) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133332" class="hidden">    (1.3*w[30]*w[31]*0.9)/(1+(1.3/0.18-1)*0.6157*0.6157*0.6157)                        </div>
+                    <div id="left_100032" class="hidden">1143</div>
+                    <div id="top_100032" class="hidden">15507.000000000002</div>
+                    <div id="width_100032" class="hidden">250.00000000000003</div>
+                    <div id="height_100032" class="hidden">61.000000000000014</div>
+                 
+                    <div id="100033" class="btn_" style="left: 492px; top: 9774px; width: 88px; height: 30px;">
+                        <p class="btn_p" id="130033">0.671</p>
+                        <div id="110033" class="btn_pos" onclick=" Move(100033);">
+                        </div>
+                        <div id="120033" class="btn_siz" onclick=" Change(100033);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130033); 
+                            CalP_on(33);">
+                        </div>
+                        <div id="135033" class="btn_ind">
+                            33
+                        </div>
+                        <div id="140033" class="_cal_div" style="display: none;">
+                            <textarea id="150033" class="_cal_text" rows="5" cols="33">0.671</textarea> 
+                            <button id="160033" class="_cal_btn" onclick=" CalP_off(33) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133333" class="hidden">  0.671                          </div>
+                    <div id="left_100033" class="hidden">943.0000000000002</div>
+                    <div id="top_100033" class="hidden">18642.000000000004</div>
+                    <div id="width_100033" class="hidden">100.00000000000001</div>
+                    <div id="height_100033" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100034" class="btn_" style="left: 684px; top: 9660px; width: 250px; height: 44px;">
+                        <p class="btn_p" id="130034">131.43797387174965</p>
+                        <div id="110034" class="btn_pos" onclick=" Move(100034);">
+                        </div>
+                        <div id="120034" class="btn_siz" onclick=" Change(100034);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130034); 
+                            CalP_on(34);">
+                        </div>
+                        <div id="135034" class="btn_ind">
+                            34
+                        </div>
+                        <div id="140034" class="_cal_div" style="display: none;">
+                            <textarea id="150034" class="_cal_text" rows="5" cols="33" style="height: 291px; width: 331px;">111</textarea> 
+                            <button id="160034" class="_cal_btn" onclick=" CalP_off(34) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133334" class="hidden">Math.pow((33*w[28]/(w[33]*w[35]*w[32])),1/3)</div>
+                    <div id="left_100034" class="hidden">1383.0000000000002</div>
+                    <div id="top_100034" class="hidden">18304.000000000004</div>
+                    <div id="width_100034" class="hidden">295.00000000000006</div>
+                    <div id="height_100034" class="hidden">213.00000000000003</div>
+                 
+                    <div id="100035" class="btn_" style="left: 68px; top: 10053px; width: 68px; height: 36px;">
+                        <p class="btn_p" id="130035">0.7</p>
+                        <div id="110035" class="btn_pos" onclick=" Move(100035);">
+                        </div>
+                        <div id="120035" class="btn_siz" onclick=" Change(100035);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130035); 
+                            CalP_on(35);">
+                        </div>
+                        <div id="135035" class="btn_ind">
+                            35
+                        </div>
+                        <div id="140035" class="_cal_div" style="display: none;">
+                            <textarea id="150035" class="_cal_text" rows="5" cols="33">0.7</textarea> 
+                            <button id="160035" class="_cal_btn" onclick=" CalP_off(35) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133335" class="hidden">0.7                            </div>
+                    <div id="left_100035" class="hidden">1300.0000000000005</div>
+                    <div id="top_100035" class="hidden">18459.000000000004</div>
+                    <div id="width_100035" class="hidden">315.00000000000006</div>
+                    <div id="height_100035" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100036" class="btn_" style="left: 596px; top: 10131px; width: 129px; height: 41px;">
+                        <p class="btn_p" id="130036">26.28759477434993</p>
+                        <div id="110036" class="btn_pos" onclick=" Move(100036);">
+                        </div>
+                        <div id="120036" class="btn_siz" onclick=" Change(100036);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130036); 
+                            CalP_on(36);">
+                        </div>
+                        <div id="135036" class="btn_ind">
+                            36
+                        </div>
+                        <div id="140036" class="_cal_div" style="display: none;">
+                            <textarea id="150036" class="_cal_text" rows="5" cols="33">22.2</textarea> 
+                            <button id="160036" class="_cal_btn" onclick=" CalP_off(36) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133336" class="hidden">w[34]/5                            </div>
+                    <div id="left_100036" class="hidden">1168</div>
+                    <div id="top_100036" class="hidden">19322.000000000004</div>
+                    <div id="width_100036" class="hidden">150.00000000000006</div>
+                    <div id="height_100036" class="hidden">70.00000000000001</div>
+                 
+                    <div id="100037" class="btn_" style="left: 503px; top: 10245px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130037">22.5</p>
+                        <div id="110037" class="btn_pos" onclick=" Move(100037);">
+                        </div>
+                        <div id="120037" class="btn_siz" onclick=" Change(100037);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130037); 
+                            CalP_on(37);">
+                        </div>
+                        <div id="135037" class="btn_ind">
+                            37
+                        </div>
+                        <div id="140037" class="_cal_div" style="display: none;">
+                            <textarea id="150037" class="_cal_text" rows="5" cols="33">30</textarea> 
+                            <button id="160037" class="_cal_btn" onclick=" CalP_off(37) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133337" class="hidden">  22.5                         </div>
+                    <div id="left_100037" class="hidden">1051.0000000000002</div>
+                    <div id="top_100037" class="hidden">19552</div>
+                    <div id="width_100037" class="hidden">100.00000000000001</div>
+                    <div id="height_100037" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100038" class="btn_" style="left: 681px; top: 10337px; width: 129px; height: 42px;">
+                        <p class="btn_p" id="130038">103.57312341093872</p>
+                        <div id="110038" class="btn_pos" onclick=" Move(100038);">
+                        </div>
+                        <div id="120038" class="btn_siz" onclick=" Change(100038);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130038); 
+                            CalP_on(38);">
+                        </div>
+                        <div id="135038" class="btn_ind">
+                            38
+                        </div>
+                        <div id="140038" class="_cal_div" style="display: none;">
+                            <textarea id="150038" class="_cal_text" rows="5" cols="33">87.468</textarea> 
+                            <button id="160038" class="_cal_btn" onclick=" CalP_off(38) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133338" class="hidden">  w[34]*0.788                          </div>
+                    <div id="left_100038" class="hidden">1427.0000000000002</div>
+                    <div id="top_100038" class="hidden">19740.000000000004</div>
+                    <div id="width_100038" class="hidden">132</div>
+                    <div id="height_100038" class="hidden">63</div>
+                 
+                    <div id="100039" class="btn_" style="left: 620px; top: 10389px; width: 163px; height: 40px;">
+                        <p class="btn_p" id="130039">23.01624964687527</p>
+                        <div id="110039" class="btn_pos" onclick=" Move(100039);">
+                        </div>
+                        <div id="120039" class="btn_siz" onclick=" Change(100039);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130039); 
+                            CalP_on(39);">
+                        </div>
+                        <div id="135039" class="btn_ind">
+                            39
+                        </div>
+                        <div id="140039" class="_cal_div" style="display: none;">
+                            <textarea id="150039" class="_cal_text" rows="5" cols="33">19.437333333333335</textarea> 
+                            <button id="160039" class="_cal_btn" onclick=" CalP_off(39) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133339" class="hidden"> w[38]/4.5                           </div>
+                    <div id="left_100039" class="hidden">1341.0000000000002</div>
+                    <div id="top_100039" class="hidden">19812.000000000004</div>
+                    <div id="width_100039" class="hidden">148.00000000000006</div>
+                    <div id="height_100039" class="hidden">72</div>
+                 
+                    <div id="100040" class="btn_" style="left: 389px; top: 10494px; width: 92px; height: 38px;">
+                        <p class="btn_p" id="130040">24</p>
+                        <div id="110040" class="btn_pos" onclick=" Move(100040);">
+                        </div>
+                        <div id="120040" class="btn_siz" onclick=" Change(100040);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130040); 
+                            CalP_on(40);">
+                        </div>
+                        <div id="135040" class="btn_ind">
+                            40
+                        </div>
+                        <div id="140040" class="_cal_div" style="display: none;">
+                            <textarea id="150040" class="_cal_text" rows="5" cols="33" style="height: 152px; width: 344px;">20</textarea> 
+                            <button id="160040" class="_cal_btn" onclick=" CalP_off(40) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133340" class="hidden">  Math.floor(w[39])+1                          </div>
+                    <div id="left_100040" class="hidden">356</div>
+                    <div id="top_100040" class="hidden">10221</div>
+                    <div id="width_100040" class="hidden">100.00000000000001</div>
+                    <div id="height_100040" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100041" class="btn_" style="left: 582px; top: 10562px; width: 100px; height: 33px;">
+                        <p class="btn_p" id="130041">108</p>
+                        <div id="110041" class="btn_pos" onclick=" Move(100041);">
+                        </div>
+                        <div id="120041" class="btn_siz" onclick=" Change(100041);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130041); 
+                            CalP_on(41);">
+                        </div>
+                        <div id="135041" class="btn_ind">
+                            41
+                        </div>
+                        <div id="140041" class="_cal_div" style="display: none;">
+                            <textarea id="150041" class="_cal_text" rows="5" cols="33" style="height: 144px; width: 261px;">90</textarea> 
+                            <button id="160041" class="_cal_btn" onclick=" CalP_off(41) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133341" class="hidden">  w[40]*4.5                          </div>
+                    <div id="left_100041" class="hidden">1348.0000000000005</div>
+                    <div id="top_100041" class="hidden">20303.000000000007</div>
+                    <div id="width_100041" class="hidden">100.00000000000001</div>
+                    <div id="height_100041" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100042" class="btn_" style="left: 629px; top: 10632px; width: 115px; height: 41px;">
+                        <p class="btn_p" id="130042">137.05583756345177</p>
+                        <div id="110042" class="btn_pos" onclick=" Move(100042);">
+                        </div>
+                        <div id="120042" class="btn_siz" onclick=" Change(100042);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130042); 
+                            CalP_on(42);">
+                        </div>
+                        <div id="135042" class="btn_ind">
+                            42
+                        </div>
+                        <div id="140042" class="_cal_div" style="display: none;">
+                            <textarea id="150042" class="_cal_text" rows="5" cols="33" style="height: 109px; width: 227px;">114.21319796954315</textarea> 
+                            <button id="160042" class="_cal_btn" onclick=" CalP_off(42) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133342" class="hidden"> w[41]/0.788                           </div>
+                    <div id="left_100042" class="hidden">1259.0000000000002</div>
+                    <div id="top_100042" class="hidden">20289.000000000004</div>
+                    <div id="width_100042" class="hidden">100.00000000000001</div>
+                    <div id="height_100042" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100043" class="btn_" style="left: 593px; top: 10707px; width: 162px; height: 43px;">
+                        <p class="btn_p" id="130043">6.091370558375634</p>
+                        <div id="110043" class="btn_pos" onclick=" Move(100043);">
+                        </div>
+                        <div id="120043" class="btn_siz" onclick=" Change(100043);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130043); 
+                            CalP_on(43);">
+                        </div>
+                        <div id="135043" class="btn_ind">
+                            43
+                        </div>
+                        <div id="140043" class="_cal_div" style="display: none;">
+                            <textarea id="150043" class="_cal_text" rows="5" cols="33">3.8071065989847717</textarea> 
+                            <button id="160043" class="_cal_btn" onclick=" CalP_off(43) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133343" class="hidden"> w[42]/w[37]                           </div>
+                    <div id="left_100043" class="hidden">1266.0000000000005</div>
+                    <div id="top_100043" class="hidden">20432</div>
+                    <div id="width_100043" class="hidden">100.00000000000001</div>
+                    <div id="height_100043" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100044" class="btn_" style="left: 591px; top: 10800px; width: 133px; height: 41px;">
+                        <p class="btn_p" id="130044">3083.756345177665</p>
+                        <div id="110044" class="btn_pos" onclick=" Move(100044);">
+                        </div>
+                        <div id="120044" class="btn_siz" onclick=" Change(100044);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130044); 
+                            CalP_on(44);">
+                        </div>
+                        <div id="135044" class="btn_ind">
+                            44
+                        </div>
+                        <div id="140044" class="_cal_div" style="display: none;">
+                            <textarea id="150044" class="_cal_text" rows="5" cols="33">3426.395939086294</textarea> 
+                            <button id="160044" class="_cal_btn" onclick=" CalP_off(44) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133344" class="hidden">  w[42]*w[37]                          </div>
+                    <div id="left_100044" class="hidden">1349.0000000000002</div>
+                    <div id="top_100044" class="hidden">20620</div>
+                    <div id="width_100044" class="hidden">100.00000000000001</div>
+                    <div id="height_100044" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100045" class="btn_" style="left: 621px; top: 10848px; width: 144px; height: 47px;">
+                        <p class="btn_p" id="130045">70441.13478832229</p>
+                        <div id="110045" class="btn_pos" onclick=" Move(100045);">
+                        </div>
+                        <div id="120045" class="btn_siz" onclick=" Change(100045);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130045); 
+                            CalP_on(45);">
+                        </div>
+                        <div id="135045" class="btn_ind">
+                            45
+                        </div>
+                        <div id="140045" class="_cal_div" style="display: none;">
+                            <textarea id="150045" class="_cal_text" rows="5" cols="33" style="width: 390px; height: 215px;">65223.27295215027</textarea> 
+                            <button id="160045" class="_cal_btn" onclick=" CalP_off(45) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133345" class="hidden">  w[37]*kvadrat(w[42])/6                          </div>
+                    <div id="left_100045" class="hidden">1190.0000000000002</div>
+                    <div id="top_100045" class="hidden">20622.000000000007</div>
+                    <div id="width_100045" class="hidden">100.00000000000001</div>
+                    <div id="height_100045" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100046" class="btn_" style="left: 627px; top: 10949px; width: 155px; height: 37px;">
+                        <p class="btn_p" id="130046">54.82233502538071</p>
+                        <div id="110046" class="btn_pos" onclick=" Move(100046);">
+                        </div>
+                        <div id="120046" class="btn_siz" onclick=" Change(100046);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130046); 
+                            CalP_on(46);">
+                        </div>
+                        <div id="135046" class="btn_ind">
+                            46
+                        </div>
+                        <div id="140046" class="_cal_div" style="display: none;">
+                            <textarea id="150046" class="_cal_text" rows="5" cols="33">45.68527918781726</textarea> 
+                            <button id="160046" class="_cal_btn" onclick=" CalP_off(46) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133346" class="hidden">  w[42]*0.4                          </div>
+                    <div id="left_100046" class="hidden">1360.0000000000002</div>
+                    <div id="top_100046" class="hidden">20891.000000000004</div>
+                    <div id="width_100046" class="hidden">100.00000000000001</div>
+                    <div id="height_100046" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100047" class="btn_" style="left: 95px; top: 10986px; width: 155px; height: 38px;">
+                        <p class="btn_p" id="130047">12.182741116751268</p>
+                        <div id="110047" class="btn_pos" onclick=" Move(100047);">
+                        </div>
+                        <div id="120047" class="btn_siz" onclick=" Change(100047);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130047); 
+                            CalP_on(47);">
+                        </div>
+                        <div id="135047" class="btn_ind">
+                            47
+                        </div>
+                        <div id="140047" class="_cal_div" style="display: none;">
+                            <textarea id="150047" class="_cal_text" rows="5" cols="33">10.152284263959391</textarea> 
+                            <button id="160047" class="_cal_btn" onclick=" CalP_off(47) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133347" class="hidden"> w[46]/4.5                           </div>
+                    <div id="left_100047" class="hidden">1017.0000000000003</div>
+                    <div id="top_100047" class="hidden">21010.000000000004</div>
+                    <div id="width_100047" class="hidden">100.00000000000001</div>
+                    <div id="height_100047" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100048" class="btn_" style="left: 726px; top: 10988px; width: 106px; height: 39px;">
+                        <p class="btn_p" id="130048">13</p>
+                        <div id="110048" class="btn_pos" onclick=" Move(100048);">
+                        </div>
+                        <div id="120048" class="btn_siz" onclick=" Change(100048);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130048); 
+                            CalP_on(48);">
+                        </div>
+                        <div id="135048" class="btn_ind">
+                            48
+                        </div>
+                        <div id="140048" class="_cal_div" style="display: none;">
+                            <textarea id="150048" class="_cal_text" rows="5" cols="33">11</textarea> 
+                            <button id="160048" class="_cal_btn" onclick=" CalP_off(48) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133348" class="hidden"> Math.floor(w[47])+1                           </div>
+                    <div id="left_100048" class="hidden">1042.0000000000005</div>
+                    <div id="top_100048" class="hidden">20971.000000000004</div>
+                    <div id="width_100048" class="hidden">100.00000000000001</div>
+                    <div id="height_100048" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100049" class="btn_" style="left: 620px; top: 11021px; width: 92px; height: 36px;">
+                        <p class="btn_p" id="130049">58.5</p>
+                        <div id="110049" class="btn_pos" onclick=" Move(100049);">
+                        </div>
+                        <div id="120049" class="btn_siz" onclick=" Change(100049);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130049); 
+                            CalP_on(49);">
+                        </div>
+                        <div id="135049" class="btn_ind">
+                            49
+                        </div>
+                        <div id="140049" class="_cal_div" style="display: none;">
+                            <textarea id="150049" class="_cal_text" rows="5" cols="33">49.5</textarea> 
+                            <button id="160049" class="_cal_btn" onclick=" CalP_off(49) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133349" class="hidden">w[48]*4.5                            </div>
+                    <div id="left_100049" class="hidden">1310.0000000000002</div>
+                    <div id="top_100049" class="hidden">21267.000000000007</div>
+                    <div id="width_100049" class="hidden">100.00000000000001</div>
+                    <div id="height_100049" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100050" class="btn_" style="left: 632px; top: 11073px; width: 109px; height: 31px;">
+                        <p class="btn_p" id="130050">41.11675126903553</p>
+                        <div id="110050" class="btn_pos" onclick=" Move(100050);">
+                        </div>
+                        <div id="120050" class="btn_siz" onclick=" Change(100050);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130050); 
+                            CalP_on(50);">
+                        </div>
+                        <div id="135050" class="btn_ind">
+                            50
+                        </div>
+                        <div id="140050" class="_cal_div" style="display: none;">
+                            <textarea id="150050" class="_cal_text" rows="5" cols="33">34.263959390862944</textarea> 
+                            <button id="160050" class="_cal_btn" onclick=" CalP_off(50) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133350" class="hidden">w[42]*0.3                            </div>
+                    <div id="left_100050" class="hidden">1205.0000000000005</div>
+                    <div id="top_100050" class="hidden">21113</div>
+                    <div id="width_100050" class="hidden">100.00000000000001</div>
+                    <div id="height_100050" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100051" class="btn_" style="left: 131px; top: 11091px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130051">9.137055837563452</p>
+                        <div id="110051" class="btn_pos" onclick=" Move(100051);">
+                        </div>
+                        <div id="120051" class="btn_siz" onclick=" Change(100051);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130051); 
+                            CalP_on(51);">
+                        </div>
+                        <div id="135051" class="btn_ind">
+                            51
+                        </div>
+                        <div id="140051" class="_cal_div" style="display: none;">
+                            <textarea id="150051" class="_cal_text" rows="5" cols="33">7.614213197969543</textarea> 
+                            <button id="160051" class="_cal_btn" onclick=" CalP_off(51) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133351" class="hidden">  w[50]/4.5                          </div>
+                    <div id="left_100051" class="hidden">996.0000000000003</div>
+                    <div id="top_100051" class="hidden">21168.000000000004</div>
+                    <div id="width_100051" class="hidden">100.00000000000001</div>
+                    <div id="height_100051" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100052" class="btn_" style="left: 686px; top: 11115px; width: 113px; height: 29px;">
+                        <p class="btn_p" id="130052">10</p>
+                        <div id="110052" class="btn_pos" onclick=" Move(100052);">
+                        </div>
+                        <div id="120052" class="btn_siz" onclick=" Change(100052);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130052); 
+                            CalP_on(52);">
+                        </div>
+                        <div id="135052" class="btn_ind">
+                            52
+                        </div>
+                        <div id="140052" class="_cal_div" style="display: none;">
+                            <textarea id="150052" class="_cal_text" rows="5" cols="33">8</textarea> 
+                            <button id="160052" class="_cal_btn" onclick=" CalP_off(52) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133352" class="hidden"> Math.floor(w[51])+1                           </div>
+                    <div id="left_100052" class="hidden">1012.0000000000003</div>
+                    <div id="top_100052" class="hidden">21156.000000000004</div>
+                    <div id="width_100052" class="hidden">100.00000000000001</div>
+                    <div id="height_100052" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100053" class="btn_" style="left: 587px; top: 11135px; width: 52px; height: 44px;">
+                        <p class="btn_p" id="130053">45</p>
+                        <div id="110053" class="btn_pos" onclick=" Move(100053);">
+                        </div>
+                        <div id="120053" class="btn_siz" onclick=" Change(100053);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130053); 
+                            CalP_on(53);">
+                        </div>
+                        <div id="135053" class="btn_ind">
+                            53
+                        </div>
+                        <div id="140053" class="_cal_div" style="display: none;">
+                            <textarea id="150053" class="_cal_text" rows="5" cols="33" style="height: 106px; width: 227px;">36</textarea> 
+                            <button id="160053" class="_cal_btn" onclick=" CalP_off(53) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133353" class="hidden">w[52]*4.5</div>
+                    <div id="left_100053" class="hidden">1117.0000000000005</div>
+                    <div id="top_100053" class="hidden">21231.000000000004</div>
+                    <div id="width_100053" class="hidden">100.00000000000001</div>
+                    <div id="height_100053" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100054" class="btn_" style="left: 758px; top: 11432px; width: 106px; height: 38px;">
+                        <p class="btn_p" id="130054">24.75</p>
+                        <div id="110054" class="btn_pos" onclick=" Move(100054);">
+                        </div>
+                        <div id="120054" class="btn_siz" onclick=" Change(100054);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130054); 
+                            CalP_on(54);">
+                        </div>
+                        <div id="135054" class="btn_ind">
+                            54
+                        </div>
+                        <div id="140054" class="_cal_div" style="display: none;">
+                            <textarea id="150054" class="_cal_text" rows="5" cols="33" style="height: 206px; width: 291px;">20.25</textarea> 
+                            <button id="160054" class="_cal_btn" onclick=" CalP_off(54) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133354" class="hidden">  w[41]-0.5*(w[49]+w[41])                          </div>
+                    <div id="left_100054" class="hidden">1383.0000000000002</div>
+                    <div id="top_100054" class="hidden">21801.000000000004</div>
+                    <div id="width_100054" class="hidden">145</div>
+                    <div id="height_100054" class="hidden">51.00000000000001</div>
+                 
+                    <div id="100055" class="btn_" style="left: 683px; top: 11496px; width: 204px; height: 37px;">
+                        <p class="btn_p" id="130055">13597.629750087948</p>
+                        <div id="110055" class="btn_pos" onclick=" Move(100055);">
+                        </div>
+                        <div id="120055" class="btn_siz" onclick=" Change(100055);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130055); 
+                            CalP_on(55);">
+                        </div>
+                        <div id="135055" class="btn_ind">
+                            55
+                        </div>
+                        <div id="140055" class="_cal_div" style="display: none;">
+                            <textarea id="150055" class="_cal_text" rows="5" cols="33" style="height: 158px; width: 279px;">NaN</textarea> 
+                            <button id="160055" class="_cal_btn" onclick=" CalP_off(55) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133355" class="hidden"> w[28]-w[29]*w[54]                           </div>
+                    <div id="left_100055" class="hidden">1514.0000000000002</div>
+                    <div id="top_100055" class="hidden">21787.000000000007</div>
+                    <div id="width_100055" class="hidden">216.00000000000006</div>
+                    <div id="height_100055" class="hidden">57.00000000000002</div>
+                 
+                    <div id="100056" class="btn_" style="left: 746px; top: 11573px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130056">78.37058573162058</p>
+                        <div id="110056" class="btn_pos" onclick=" Move(100056);">
+                        </div>
+                        <div id="120056" class="btn_siz" onclick=" Change(100056);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130056); 
+                            CalP_on(56);">
+                        </div>
+                        <div id="135056" class="btn_ind">
+                            56
+                        </div>
+                        <div id="140056" class="_cal_div" style="display: none;">
+                            <textarea id="150056" class="_cal_text" rows="5" cols="33" style="width: 341px; height: 337px;">64.87058573162058</textarea> 
+                            <button id="160056" class="_cal_btn" onclick=" CalP_off(56) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133356" class="hidden">(w[25]*(w[41]+w[49])+w[7]*(w[41]+w[53]))/(2*w[13])</div>
+                    <div id="left_100056" class="hidden">1410.0000000000002</div>
+                    <div id="top_100056" class="hidden">21993.000000000004</div>
+                    <div id="width_100056" class="hidden">100.00000000000001</div>
+                    <div id="height_100056" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100057" class="btn_" style="left: 713px; top: 11651px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130057">39.033842413788136</p>
+                        <div id="110057" class="btn_pos" onclick=" Move(100057);">
+                        </div>
+                        <div id="120057" class="btn_siz" onclick=" Change(100057);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130057); 
+                            CalP_on(57);">
+                        </div>
+                        <div id="135057" class="btn_ind">
+                            57
+                        </div>
+                        <div id="140057" class="_cal_div" style="display: none;">
+                            <textarea id="150057" class="_cal_text" rows="5" cols="33" style="height: 229px; width: 262px;">47.15704442658081</textarea> 
+                            <button id="160057" class="_cal_btn" onclick=" CalP_off(57) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133357" class="hidden">w[13]*100/(0.289*w[56])</div>
+                    <div id="left_100057" class="hidden">1401.0000000000002</div>
+                    <div id="top_100057" class="hidden">22136.000000000004</div>
+                    <div id="width_100057" class="hidden">100.00000000000001</div>
+                    <div id="height_100057" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100058" class="btn_" style="left: 771px; top: 11736px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130058">0.9379624019798938</p>
+                        <div id="110058" class="btn_pos" onclick=" Move(100058);">
+                        </div>
+                        <div id="120058" class="btn_siz" onclick=" Change(100058);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130058); 
+                            CalP_on(58);">
+                        </div>
+                        <div id="135058" class="btn_ind">
+                            58
+                        </div>
+                        <div id="140058" class="_cal_div" style="display: none;">
+                            <textarea id="150058" class="_cal_text" rows="5" cols="33" style="height: 329px; width: 260px;">NaN</textarea> 
+                            <button id="160058" class="_cal_btn" onclick=" CalP_off(58) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133358" class="hidden">1-(kvadrat(w[57])*w[29])/(3000*w[37]*w[56]*w[32])</div>
+                    <div id="left_100058" class="hidden">1231.0000000000002</div>
+                    <div id="top_100058" class="hidden">22592.000000000004</div>
+                    <div id="width_100058" class="hidden">100.00000000000001</div>
+                    <div id="height_100058" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100059" class="btn_" style="left: 710px; top: 11825px; width: 100px; height: 50px;">
+                        <p class="btn_p" id="130059">0.34190134785772147</p>
+                        <div id="110059" class="btn_pos" onclick=" Move(100059);">
+                        </div>
+                        <div id="120059" class="btn_siz" onclick=" Change(100059);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130059); 
+                            CalP_on(59);">
+                        </div>
+                        <div id="135059" class="btn_ind">
+                            59
+                        </div>
+                        <div id="140059" class="_cal_div" style="display: none;">
+                            <textarea id="150059" class="_cal_text" rows="5" cols="33" style="width: 673px; height: 95px;">NaN</textarea> 
+                            <button id="160059" class="_cal_btn" onclick=" CalP_off(59) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133359" class="hidden">w[29]/w[44]+w[55]/(w[58]*0.671*w[45])</div>
+                    <div id="left_100059" class="hidden">963.0000000000002</div>
+                    <div id="top_100059" class="hidden">22474.000000000004</div>
+                    <div id="width_100059" class="hidden">100.00000000000001</div>
+                    <div id="height_100059" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100060" class="btn_" style="left: 791px; top: 11906px; width: 130px; height: 49px;">
+                        <p class="btn_p" id="130060">32.13862706488596</p>
+                        <div id="110060" class="btn_pos" onclick=" Move(100060);">
+                        </div>
+                        <div id="120060" class="btn_siz" onclick=" Change(100060);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130060); 
+                            CalP_on(60);">
+                        </div>
+                        <div id="135060" class="btn_ind">
+                            60
+                        </div>
+                        <div id="140060" class="_cal_div" style="display: none;">
+                            <textarea id="150060" class="_cal_text" rows="5" cols="33" style="height: 297px; width: 358px;">NaN</textarea> 
+                            <button id="160060" class="_cal_btn" onclick=" CalP_off(60) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133360" class="hidden">100*(w[32]-w[59])/w[32]</div>
+                    <div id="left_100060" class="hidden">1258.0000000000005</div>
+                    <div id="top_100060" class="hidden">22563.000000000004</div>
+                    <div id="width_100060" class="hidden">100.00000000000001</div>
+                    <div id="height_100060" class="hidden">50.00000000000001</div>
+                 
+                    <div id="100061" class="btn_" style="left: 746px; top: 12090px; width: 137px; height: 47px;">
+                        <p class="btn_p" id="130061">112.76909109431439</p>
+                        <div id="110061" class="btn_pos" onclick=" Move(100061);">
+                        </div>
+                        <div id="120061" class="btn_siz" onclick=" Change(100061);">
+                        </div>
+                        <div class="btn_cal" onclick=" Calc(130061); 
+                            CalP_on(61);">
+                        </div>
+                        <div id="135061" class="btn_ind">
+                            61
+                        </div>
+                        <div id="140061" class="_cal_div" style="display: none;">
+                            <textarea id="150061" class="_cal_text" rows="5" cols="33" style="width: 305px; height: 188px;">NaN</textarea> 
+                            <button id="160061" class="_cal_btn" onclick=" CalP_off(61) ;">
+                                OK
+                            </button>
+                        </div>
+
+                    </div>
+                    <div id="133361" class="hidden">Math.pow((30*w[45]*(1-w[60]/100)),(1/3))</div>
+                    <div id="left_100061" class="hidden">746</div>
+                    <div id="top_100061" class="hidden">12090</div>
+                    <div id="width_100061" class="hidden">130</div>
+                    <div id="height_100061" class="hidden">49</div>
+                </div>
+        <script>
+            let mousePos = { x: undefined, y: undefined };
+            let max_width = document.querySelector('.img_').clientWidth;
+            let screen_last_width = 0;
+            let max_width_before = 1920;
+            let sc_size = 500;
+            let www = false;
+            let www_ = false;
+            let NoB = 0;
+            let arr = [];
+            let w = [0];
+            let rem_x=0;
+            let rem_y=0;
+            let elem = {
+                self:Object,
+                pos:Object,
+                siz:Object,
+                p:Object,
+                ind:Object,
+                str:Object
+            };
+            let el_str = {
+                self: '',
+                pos: '',
+                siz: '',
+                p:'',
+                ind:'',
+                str:''
+            };
+            let cal_s = {
+                div: '',
+                btn: '',
+                tex: ''
+            };
+            let cal_e = {
+                div:Object,
+                btn:Object,
+                tex:Object
+            };
+            let d_w = 0;
+            let d_h = 0;
+            let i_ = 0;
+            let first_pos = { 
+                        x: 0, 
+                        y: 0
+                    };
+            let first_siz = {
+                x: 0,
+                y: 0
+            };
+            let num_i = 0;
+            screen_last_width = Number(document.getElementById(`screen_last_width`).innerHTML);
+            /*AddBtn();
+            AddBtn();*/
+            //AddBtn();
+            Start();
+            UpDate();
+    
+            // document.querySelector('html').innerHTML;
+            // console.log(document.querySelector('html').innerHTML);
+            function Start() {
+                // i__ = //
+                screen_last_width = Number(document.getElementById('screen_last_width').innerHTML);
+                NoB = Number(document.getElementById('size_of_blocks').innerHTML);
+                if(NoB > 0) {
+                    for (let i__=1; i__<= NoB; i__++) {
+                        select(i__);
+                        arr.push({
+                            str: '',
+                            num: 0
+                        });
+                        w.push(0);
+                        arr[i__-1].str = document.getElementById(el_str.str).innerHTML;
+                        arr[i__-1].num = Number(eval(arr[i__-1].str));
+                        w[i__] = arr[i__-1].num;
+    
+                        cal_e.tex.innerHTML = w[i__];
+                        //
+                        // Number(document.getElementById(`left_`+el_str.self).innerHTML)
+                        first_pos = { 
+                            x: Number(document.getElementById(`left_`+el_str.self).innerHTML),
+                            y: Number(document.getElementById(`top_`+el_str.self).innerHTML)
+                        };
+                        first_siz = {
+                            x: Number(document.getElementById(`width_`+el_str.self).innerHTML),
+                            y: Number(document.getElementById(`height_`+el_str.self).innerHTML)
+                        };
+                        console.log('_');
+                        
+                        console.log(first_pos);
+                        console.log(first_siz);
+                        first_pos.x *= (document.querySelector('.img_').clientWidth)/screen_last_width;
+                        first_pos.y *= (document.querySelector('.img_').clientWidth)/screen_last_width;
+                       
+                        //
+                        elem.self.style.left = first_pos.x+'px';
+                        elem.self.style.top = (first_pos.y-262)+'px';
+                        //
+                        elem.self.style.width = (first_siz.x) +'px';
+                        elem.self.style.height = (first_siz.y) +'px';
+                        //
+                    }
+                }
+            }
+    
+            function select(num_) {
+                el_str.self = '1000'+String(num_);
+                el_str.pos = '1100'+String(num_);
+                el_str.siz = '1200'+String(num_);
+                el_str.p = '1300'+String(num_);
+                el_str.ind = '1350'+String(num_);
+                el_str.str = '1333'+String(num_);
+                cal_s.div = '1400'+String(num_);
+                cal_s.tex = '1500'+String(num_);
+                cal_s.btn = '1600'+String(num_);
+                elem.self = document.getElementById(el_str.self);
+                elem.pos = document.getElementById(el_str.pos);
+                elem.siz = document.getElementById(el_str.siz);
+                elem.p = document.getElementById(el_str.p);
+                elem.ind = document.getElementById(el_str.ind);
+                elem.str = document.getElementById(el_str.str);
+                cal_e.div = document.getElementById(cal_s.div);
+                cal_e.tex = document.getElementById(cal_s.tex);
+                cal_e.btn = document.getElementById(cal_s.btn);
+            }
+    
+            //AddBtn();
+    
+            function AddBtn() {
+                NoB++;
+                arr.push( {
+                    num: 0,
+                    str: '0'
+                });
+                w.push(0);
+                w[NoB] = arr[NoB-1].num;
+                i_ = NoB;
+                    const body = document.getElementById('main');
+                    select(i_);
+                    document.getElementById('size_of_blocks').innerHTML=String(NoB);
+                    body.innerHTML+=
+                    ` 
+                        <div id="${el_str.self}" class="btn_">
+                            <p class="btn_p" id="${el_str.p}">
+                                </p>
+                            <div id="${el_str.pos}" class="btn_pos" 
+                                onclick=" Move(${el_str.self});">
+                            </div>
+                            <div id="${el_str.siz}" class="btn_siz"
+                                onclick=" Change(${el_str.self});">
+                            </div>
+                            <div class="btn_cal"
+                                onclick=" Calc(${el_str.p}); 
+                                CalP_on(${NoB});">
+                            </div>
+                            <div id="${el_str.ind}" class="btn_ind">
+                                ${NoB}
+                            </div>
+                            <div id="${cal_s.div}" class="_cal_div">
+                                <textarea id="${cal_s.tex}" class="_cal_text" 
+                                    rows="5" cols="33">
+                                </textarea> 
+                                <button id="${cal_s.btn}" class="_cal_btn"
+                                    onclick=" CalP_off(${NoB}) ;">
+                                    OK
+                                </button>
+                            </div>
+    
+                        </div>
+                        <div id="${el_str.str}" class="hidden">
+                            </div>
+                        <div id="left_${el_str.self}" class="hidden">
+                            100
+                        </div>
+                        <div id="top_${el_str.self}" class="hidden">
+                            100
+                        </div>
+                        <div id="width_${el_str.self}" class="hidden">
+                            100
+                        </div>
+                        <div id="height_${el_str.self}" class="hidden">
+                            50
+                        </div>
+                    `;
+                    select(i_);
+                    elem.self.style.left=`${(100)}px`;
+                    elem.self.style.top=`${mousePos.y+100}px`;
+                    UpDate();
+            }
+    
+            function CalP_on(num__) {
+                select(num__);
+                cal_e.tex.value = String(arr[num__-1].str);
+                cal_e.div.style.display="block";
+                
+            }
+    
+            function CalP_off(num__) {
+                select(num__);
+                if ( typeof(eval( (String(cal_e.tex.value)) )) != 'number') {
+                    arr[num__-1].str = '0';
+                } else {
+                    arr[num__-1].str = (String(cal_e.tex.value));
+                }
+                arr[num__-1].num = Number(eval(arr[num__-1].str));
+                w[num__] = arr[num__-1].num;
+                cal_e.div.style.display="none";
+                UpDate();
+            }
+    
+            function UpDate() {
+                if (NoB > 0) {
+                    for (let i=1; i<= NoB; i++) {
+                        select(i);
+                        arr[i-1].num = Number(eval(arr[i-1].str));
+                        w[i] = arr[i-1].num;
+                        elem.p.innerHTML=String(arr[i-1].num);
+                        elem.str.innerHTML = String(arr[i-1].str);
+                    }
+                }
+                // 1920 px
+            }
+           
+            function Move(id_) {
+                elem.self = document.getElementById(id_);
+                www = !www;
+            }
+            function Change(id_) {
+                elem.self = document.getElementById(id_);
+                rem_x = mousePos.x;
+                rem_y = mousePos.y;
+                d_w = elem.self.clientWidth;
+                d_h = elem.self.clientHeight;
+                www_ = !www_;
+            }
+    
+           /* document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    www = false;
+                    www_ = false;
+                }
+                if (event.key === '0') {
+                    alert(document.querySelector('.img_').clientWidth);
+                }
+                if (event.key === 'r') {
+                    alert(document.querySelector('.img_').clientWidth);
+                }
+            });
+    
+           /* function Calc(id_) {
+               /* elem.p = document.getElementById(id_);
+                elem.p.innerHTML = arr[NoB-1];*/
+    
+                //UpDate();
+            }*/
+    
+    
+            window.addEventListener('mousemove', (event) => {
+                mousePos = { x: event.pageX, y: event.pageY };
+                if (www === true) {
+                    elem.self.style.left = mousePos.x+'px';
+                    elem.self.style.top = mousePos.y+'px';
+                    document.getElementById(`left_${el_str.self}`).innerHTML = mousePos.x;
+                    document.getElementById(`top_${el_str.self}`).innerHTML = mousePos.y;
+                }
+                if (www_ === true) {          
+                    elem.self.style.width = (d_w + mousePos.x - rem_x) +'px';
+                    elem.self.style.height = (d_h + mousePos.y - rem_y) +'px';
+                    document.getElementById(`width_${el_str.self}`).innerHTML = (d_w + mousePos.x - rem_x);
+                    document.getElementById(`height_${el_str.self}`).innerHTML = (d_h + mousePos.y - rem_y);
+                }
+            });
+    
+            //
+            /* UZB funksiyalar */
+            // ildiz funksiyasi
+            function ildiz(variable) {
+                result = Math.pow(variable,1/2);
+                return result;
+            }
+            // kvadrat funksiyasi
+            function kvadrat(variable) {
+                result = Math.pow(variable,2);
+                return result;
+            }
+            // darajalash funksiyasi
+            function darajalash(variable, variable_) {
+                result = Math.pow(variable,variable_);
+                return result;
+            }
+            /* --- --- --- */
+
+            
+           /* let nis = 0;
+            window.onresize = function(event) {
+                max_width_before = max_width;
+                max_width = document.querySelector('.img_').clientWidth;
+                //max_width+=17;
+                nis = (max_width/max_width_before);
+                console.log('nis: '+ (max_width/max_width_before)*100 );
+                for (let i=1; i<= NoB; i++) {
+                    select(i);
+                    //
+                    elem.self.style.left = 
+                        Number(document.getElementById(`left_${el_str.self}`).innerHTML)*nis;
+                    document.getElementById(`left_${el_str.self}`).innerHTML =  
+                    String(Number(document.getElementById(`left_${el_str.self}`).innerHTML)*nis);
+                    //
+                    elem.self.style.top = 
+                        Number(document.getElementById(`top_${el_str.self}`).innerHTML)*nis;
+                    document.getElementById(`top_${el_str.self}`).innerHTML = 
+                    String(Number(document.getElementById(`top_${el_str.self}`).innerHTML)*nis);
+                    //
+                    elem.self.style.width = 
+                        Number(document.getElementById(`width_${el_str.self}`).innerHTML)*nis;
+                    document.getElementById(`width_${el_str.self}`).innerHTML =  
+                    String(Number(document.getElementById(`width_${el_str.self}`).innerHTML)*nis);
+                    //
+                    elem.self.style.height = 
+                        Number(document.getElementById(`height_${el_str.self}`).innerHTML)*nis;
+                    document.getElementById(`height_${el_str.self}`).innerHTML = 
+                    String(Number(document.getElementById(`height_${el_str.self}`).innerHTML)*nis);
+                    //
+                    document.getElementById(`screen_last_width`).innerHTML = 
+                        String(screen_last_width);
+                    
+                }
+                screen_last_width = document.querySelector('.img_').clientWidth;
+                document.getElementById('screen_last_width').innerHTML = 
+                    String(screen_last_width);
+                console.log( window.innerWidth );
+                console.log( max_width );
+                
+            }; */
+            /*function ChangeSize(num__) {
+                if (num__ === -1 ) {
+                    if (sc_size > 500) {
+                        sc_size -= 500;
+                        document.documentElement.setAttribute
+                            ('data-size',String(sc_size));
+                            if(NoB > 0) {
+                                for (let i__=1; i__<= NoB; i__++) {
+                                    select(i__);
+                                    //               
+                                    let int_ = 0;
+                                    //alert(NoB);    
+                                    int_ = Number(document.getElementById(`left_${el_str.self}`).innerHTML);
+                                    int_ = Math.floor(int_  * 0.5);                          
+                                    elem.self.style.left = String(int_)+'px';
+                                    //
+                                    int_ = Number(document.getElementById(`top_${el_str.self}`).innerHTML);
+                                    int_ = Math.floor(int_ * 0.5);                              
+                                    elem.self.style.top = String(int_)+'px';
+                                    //
+                                    int_ = Number(document.getElementById(`width_${el_str.self}`).innerHTML);
+                                    int_ = Math.floor(int_ * 0.5);                              
+                                    elem.self.style.width = String(int_)+'px';
+                                    //
+                                    int_ = Number(document.getElementById(`height_${el_str.self}`).innerHTML);
+                                    int_ = Math.floor(int_ * 0.5);                               
+                                    elem.self.style.height = String(int_)+'px';
+                                    //
+                                }
+                            }
+                    }
+                } else if (num__ === 1) {
+                    
+                    if (sc_size < 1000) {
+                        sc_size += 500;
+                        document.documentElement.setAttribute
+                            ('data-size',String(sc_size));
+                            NoB = Number(document.getElementById('size_of_blocks').innerHTML);
+                            if(NoB > 0) {
+                                for (let i__=1; i__<= NoB; i__++) {
+                                    select(i__);
+                                    //               
+                                    let int_ = 0;
+                                    //alert(NoB);    
+                                    int_ = Number(document.getElementById(`left_${el_str.self}`).innerHTML);
+                                    int_ = int_ * 2;                          
+                                    elem.self.style.left = String(int_)+'px';
+                                    //
+                                    int_ = Number(document.getElementById(`top_${el_str.self}`).innerHTML);
+                                    int_ = int_ * 2;                          
+                                    elem.self.style.top = String(int_)+'px';
+                                    //
+                                    int_ = Number(document.getElementById(`width_${el_str.self}`).innerHTML);
+                                    int_ = int_ * 2;                          
+                                    elem.self.style.width = String(int_)+'px';
+                                    //
+                                    int_ = Number(document.getElementById(`height_${el_str.self}`).innerHTML);
+                                    int_ = int_ * 2;                          
+                                    elem.self.style.height = String(int_)+'px';
+                                    //
+                                }
+                            }
+                        UpDate();
+                    }
+                }
+            }*/
+            function ff() {
+                console.log(document.querySelector('html').innerHTML);
+            }
+        </script>    
+    <!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+
+</script>
+
+
+</body>
+</html>
